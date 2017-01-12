@@ -1,4 +1,4 @@
-""" Bokeh comes with a number of interactive tools.
+''' Bokeh comes with a number of interactive tools.
 
 There are five types of tool interactions:
 
@@ -19,23 +19,19 @@ their button in the toolbar is pressed. Inspectors are passive tools that
 merely report information or annotate the plot in some way, and may
 always be active regardless of what other tools are currently active.
 
-"""
+'''
 from __future__ import absolute_import
 
+from ..core.enums import accept_left_right_center, Anchor, DeprecatedAnchor, Dimension, Dimensions, Location
+from ..core.has_props import abstract
+from ..core.properties import Any, Auto, Bool, Color, Dict, Either, Enum, Float, Percent, Instance, List, Override, String, Tuple
 from ..model import Model
-from ..core.properties import (
-    abstract, Float, Color, Percent,
-    Any, Auto, Bool, String, Enum, Instance, Either, List, Dict, Tuple, Override
-)
-from ..core.enums import (Dimension, Dimensions, Location, Anchor,
-    DeprecatedAnchor, accept_left_right_center,
-)
 from ..util.deprecation import deprecated
 
 from .annotations import BoxAnnotation, PolyAnnotation
 from .callbacks import Callback
 from .renderers import Renderer
-from .layouts import LayoutDOM, Box
+from .layouts import Box, LayoutDOM
 
 def _deprecated_dimensions(tool):
     def transformer(value):
@@ -51,49 +47,58 @@ def _deprecated_dimensions(tool):
     return transformer
 
 class ToolEvents(Model):
-    """
+    '''
 
-    """
+    '''
 
     geometries = List(Dict(String, Any))
 
-
 @abstract
 class Tool(Model):
-    """ A base class for all interactive tool types. ``Tool`` is
+    ''' A base class for all interactive tool types. ``Tool`` is
     not generally useful to instantiate on its own.
 
-    """
+    '''
 
     plot = Instance(".models.plots.Plot", help="""
     The Plot that this tool will act on.
     """)
 
-
 @abstract
 class Action(Tool):
-    pass
+    '''
 
+    '''
+    pass
 
 @abstract
 class Drag(Tool):
-    pass
+    '''
 
+    '''
+    pass
 
 @abstract
 class Scroll(Tool):
-    pass
+    '''
 
+    '''
+    pass
 
 @abstract
 class Tap(Tool):
+    '''
+
+    '''
     pass
 
 
 @abstract
 class Inspection(Tool):
-    pass
+    '''
 
+    '''
+    pass
 
 @abstract
 class ToolbarBase(LayoutDOM):

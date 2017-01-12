@@ -36,25 +36,26 @@ All these glyphs share a minimal common interface through their base class
 '''
 from __future__ import absolute_import
 
-from ..core.enums import Direction, Anchor, DeprecatedAnchor, accept_left_right_center
+from ..core.enums import accept_left_right_center, Anchor, DeprecatedAnchor, Direction
+from ..core.has_props import abstract
+from ..core.properties import (AngleSpec, Bool, DistanceSpec, Enum, Float,
+                               Include, Instance, Int, NumberSpec, StringSpec)
 from ..core.property_mixins import FillProps, LineProps, TextProps
 from ..model import Model
-from ..core.properties import (abstract, AngleSpec, Bool, DistanceSpec, Enum, Float,
-                          Include, Instance, Int, NumberSpec, StringSpec)
 from ..util.deprecation import deprecated
 
 from .mappers import ColorMapper, LinearColorMapper
 
 @abstract
 class Glyph(Model):
-    """ Base class for all glyph models. """
+    ''' Base class for all glyph models. '''
 
     visible = Bool(True, help="""
     Whether the glyph should render or not.
     """)
 
 class AnnularWedge(Glyph):
-    """ Render annular wedges. """
+    ''' Render annular wedges. '''
 
     __example__ = "tests/glyphs/AnnularWedge.py"
 
@@ -99,7 +100,7 @@ class AnnularWedge(Glyph):
     """)
 
 class Annulus(Glyph):
-    """ Render annuli. """
+    ''' Render annuli. '''
 
     __example__ = "tests/glyphs/Annulus.py"
 
@@ -132,7 +133,7 @@ class Annulus(Glyph):
     """)
 
 class Arc(Glyph):
-    """ Render arcs. """
+    ''' Render arcs. '''
 
     __example__ = "tests/glyphs/Arc.py"
 
@@ -169,12 +170,12 @@ class Arc(Glyph):
     """)
 
 class Bezier(Glyph):
-    u""" Render Bézier curves.
+    u''' Render Bézier curves.
 
     For more information consult the `Wikipedia article for Bézier curve`_.
 
     .. _Wikipedia article for Bézier curve: http://en.wikipedia.org/wiki/Bézier_curve
-    """
+    '''
 
     __example__ = "tests/glyphs/Bezier.py"
 
@@ -219,7 +220,7 @@ class Bezier(Glyph):
     """)
 
 class Ellipse(Glyph):
-    u""" Render ellipses. """
+    u''' Render ellipses. '''
 
     __example__ = "tests/glyphs/Ellipse.py"
 
@@ -256,7 +257,9 @@ class Ellipse(Glyph):
     """)
 
 class HBar(Glyph):
-    """ Render horizontal bars, given a center coordinate, height and (left, right) coordinates. """
+    ''' Render horizontal bars, given a center coordinate, height and (left, right) coordinates.
+
+    '''
 
     __example__ = "tests/glyphs/HBar.py"
 
@@ -289,7 +292,7 @@ class HBar(Glyph):
     """)
 
 class Image(Glyph):
-    """ Render images given as scalar data together with a color mapper.
+    ''' Render images given as scalar data together with a color mapper.
 
     In addition to the defined model properties, ``Image`` also can accept
     a keyword argument ``palette`` in place of an explicit ``color_mapper``.
@@ -302,7 +305,7 @@ class Image(Glyph):
         exception will be raised. If neither is passed, then the ``Greys9``
         palette will be used as a default.
 
-    """
+    '''
 
     def __init__(self, **kwargs):
         if 'palette' in kwargs and 'color_mapper' in kwargs:
@@ -375,7 +378,9 @@ class Image(Glyph):
     # ref: https://github.com/bokeh/bokeh/issues/1763
 
 class ImageRGBA(Glyph):
-    """ Render images given as RGBA data. """
+    ''' Render images given as RGBA data.
+
+    '''
 
     # a canonical order for positional args that can be used for any
     # functions derived from this class
@@ -429,7 +434,9 @@ class ImageRGBA(Glyph):
     # ref: https://github.com/bokeh/bokeh/issues/1763
 
 class ImageURL(Glyph):
-    """ Render images loaded from given URLs. """
+    ''' Render images loaded from given URLs.
+
+    '''
 
     __example__ = "tests/glyphs/ImageURL.py"
 
@@ -510,12 +517,12 @@ class ImageURL(Glyph):
     """)
 
 class Line(Glyph):
-    """ Render a single line.
+    ''' Render a single line.
 
     .. note::
         The ``Line`` glyph is different from most other glyphs in that
         the vector of values only produces one glyph on the Plot.
-    """
+    '''
     # a canonical order for positional args that can be used for any
     # functions derived from this class
     _args = ('x', 'y')
@@ -535,13 +542,13 @@ class Line(Glyph):
     """)
 
 class MultiLine(Glyph):
-    """ Render several lines.
+    ''' Render several lines.
 
     .. note::
         The data for the ``MultiLine`` glyph is different in that the
         vector of values is not a vector of scalars. Rather, it is a
         "list of lists".
-    """
+    '''
 
     __example__ = "tests/glyphs/MultiLine.py"
 
@@ -562,13 +569,13 @@ class MultiLine(Glyph):
     """)
 
 class Oval(Glyph):
-    u""" Render ovals.
+    u''' Render ovals.
 
     .. note::
         This glyph renders ovals using Bézier curves, which are similar,
         but not identical to ellipses. In particular, widths equal to heights
         will not render circles. Use the ``Ellipse`` glyph for that.
-    """
+    '''
 
     __example__ = "tests/glyphs/Oval.py"
 
@@ -605,12 +612,12 @@ class Oval(Glyph):
     """)
 
 class Patch(Glyph):
-    """ Render a single patch.
+    ''' Render a single patch.
 
     .. note::
         The ``Patch`` glyph is different from most other glyphs in that
         the vector of values only produces one glyph on the Plot.
-    """
+    '''
 
     __example__ = "tests/glyphs/Patch.py"
 
@@ -645,13 +652,13 @@ class Patch(Glyph):
     """)
 
 class Patches(Glyph):
-    """ Render several patches.
+    ''' Render several patches.
 
     .. note::
         The data for the ``Patches`` glyph is different in that the
         vector of values is not a vector of scalars. Rather, it is a
         "list of lists".
-    """
+    '''
 
     __example__ = "tests/glyphs/Patches.py"
 
@@ -686,7 +693,9 @@ class Patches(Glyph):
     """)
 
 class Quad(Glyph):
-    """ Render axis-aligned quads. """
+    ''' Render axis-aligned quads.
+
+    '''
 
     __example__ = "tests/glyphs/Quad.py"
 
@@ -719,7 +728,9 @@ class Quad(Glyph):
     """)
 
 class Quadratic(Glyph):
-    """ Render parabolas. """
+    ''' Render parabolas.
+
+    '''
 
     __example__ = "tests/glyphs/Quadratic.py"
 
@@ -756,7 +767,9 @@ class Quadratic(Glyph):
     """)
 
 class Ray(Glyph):
-    """ Render rays. """
+    ''' Render rays.
+
+    '''
 
     __example__ = "tests/glyphs/Ray.py"
 
@@ -786,7 +799,9 @@ class Ray(Glyph):
     """)
 
 class Rect(Glyph):
-    """ Render rectangles. """
+    ''' Render rectangles.
+
+    '''
 
     __example__ = "tests/glyphs/Rect.py"
 
@@ -832,7 +847,9 @@ class Rect(Glyph):
     """)
 
 class Segment(Glyph):
-    """ Render segments. """
+    ''' Render segments.
+
+    '''
 
     __example__ = "tests/glyphs/Segment.py"
 
@@ -861,7 +878,9 @@ class Segment(Glyph):
     """)
 
 class Text(Glyph):
-    """ Render text. """
+    ''' Render text.
+
+    '''
 
     __example__ = "tests/glyphs/Text.py"
 
@@ -904,7 +923,9 @@ class Text(Glyph):
     """)
 
 class VBar(Glyph):
-    """ Render vertical bars, given a center coordinate, width and (top, bottom) coordinates. """
+    ''' Render vertical bars, given a center coordinate, width and (top, bottom) coordinates.
+
+    '''
 
     __example__ = "tests/glyphs/VBar.py"
 
@@ -937,8 +958,9 @@ class VBar(Glyph):
     """)
 
 class Wedge(Glyph):
-    """ Render wedges.
-    """
+    ''' Render wedges.
+
+    '''
 
     __example__ = "tests/glyphs/Wedge.py"
 
@@ -979,10 +1001,9 @@ class Wedge(Glyph):
     """)
 
 # XXX: allow `from bokeh.models.glyphs import *`
-from .markers import (Marker, Asterisk, Circle, CircleCross, CircleX, Cross,
-                      Diamond, DiamondCross, InvertedTriangle, Square,
-                      SquareCross, SquareX, Triangle, X)
+from .markers import (Asterisk, Circle, CircleCross, CircleX, Cross, Diamond, DiamondCross,
+                      InvertedTriangle, Marker, Square, SquareCross, SquareX, Triangle, X)
 
 # Fool pyflakes
-(Marker, Asterisk, Circle, CircleCross, CircleX, Cross, Diamond, DiamondCross,
-InvertedTriangle, Square, SquareCross, SquareX, Triangle, X)
+(Asterisk, Circle, CircleCross, CircleX, Cross, Diamond, DiamondCross,
+InvertedTriangle, Marker, Square, SquareCross, SquareX, Triangle, X)

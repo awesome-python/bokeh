@@ -43,11 +43,18 @@ _EXAMPLE_TEMPLATE = '''
     -------
 
     .. bokeh-plot:: ../%(path)s
-        :source-position: none
-
-    *source:* :bokeh-tree:`%(path)s`
+        :source-position: below
 
 '''
+
+def abstract(cls):
+    ''' A decorator to mark abstract base classes derived from |HasProps|.
+
+    '''
+    if not issubclass(cls, HasProps):
+        raise TypeError("%s is not a subclass of HasProps" % cls.__name__)
+
+    return cls
 
 class MetaHasProps(type):
     ''' Specialize the construction of |HasProps| classes.

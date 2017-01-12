@@ -4,9 +4,10 @@
 from __future__ import absolute_import
 
 from ..core.enums import StepMode, JitterRandomDistribution
-from ..core.properties import abstract
-from ..core.properties import Either, Enum, Float, Instance, Seq, String, Bool
+from ..core.has_props import abstract
+from ..core.properties import Bool, Either, Enum, Float, Instance, Seq, String
 from ..model import Model
+
 from .sources import ColumnarDataSource
 
 @abstract
